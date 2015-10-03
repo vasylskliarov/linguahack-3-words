@@ -4,6 +4,7 @@
 
 # Home page
 GET     /                           controllers.Application.index
+GET     /texts                      controllers.Application.texts
 GET     /text                       controllers.RestControllers.getText
 POST    /text/next                  controllers.RestControllers.getNextText
 

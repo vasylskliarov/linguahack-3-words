@@ -32,8 +32,16 @@ public class Text extends Model {
 	private String normalizedText;
 	
 	private int showedCount;
-	
-	// -- Queries
+
+    public Text() {
+    }
+
+    public Text(long id, String fileName) {
+        this.id = id;
+        this.fileName = fileName;
+    }
+
+    // -- Queries
 
     public static Model.Finder<String, Text> find = new Model.Finder<String, Text>(String.class, Text.class);
 

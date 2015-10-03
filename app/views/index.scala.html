@@ -1,5 +1,49 @@
-@(message: String)
+@main("3 Words") {
+<header>
+    <div class="container">
+        <div class="intro-text">
+            <div class="intro-lead-in">LinguaHack 2015 Project!</div>
+            <div class="intro-heading">Мы знаем, что вы знаете 3 слова</div>
+            <a href="#services" class="page-scroll btn btn-xl btn-start">Начать</a>
+        </div>
+    </div>
+</header>
 
-@main("Welcome to Play") {
-    @message
+<!-- Page Content -->
+<section id="services">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h1 class="page-header">Прочитайте текст<br/><small>Отметьте незнакомые слова</small>
+                </h1>
+            </div>
+        </div>
+
+        <!-- Team Members Row -->
+        <div class="row text">
+
+        </div>
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <button type="button" class="btn btn-danger">Не понял ни одного слова</button>
+                <button type="button" class="btn btn-success btn-next-text">Прочитал, следующий текст</button>
+            </div>
+        </div>
+
+        <hr>
+
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>LinguaHack 2015 project "linguahack-3-words"</p>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+        </footer>
+
+    </div>
+</section>
+<!-- /.container -->
 }

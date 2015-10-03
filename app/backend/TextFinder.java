@@ -48,6 +48,10 @@ public class TextFinder {
         return DUMMY;
     }
 
+    public static String getDummy() {
+        return DUMMY;
+    }
+
     public static List<Word> getNormalizedWordsByTextId(Long id) {
         return Text.findById(id).getNormalizedWords();
     }
