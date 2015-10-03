@@ -16,7 +16,9 @@ import java.util.*;
  * Created by hlib on 03.10.15.
  */
 public class RestControllers extends Controller {
-    private static final String DUMMY = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
+    private static final String DUMMY = "Suicide is when a person chooses to kill himself or herself. When someone kills himself, people say that he has \"committed suicide\". When a person thinks about killing themselves, the person is said to be suicidal.\n" +
+            "When people start having thoughts about killing themselves it is, or should be, a medical emergency. They should get a suicide risk assessment as soon as possible.\n" +
+            "There are many reasons why a person might think about committing suicide. Most people who are suicidal have some type of mental condition or illness. They may have a chronic condition, which means it has been going on for a long time. But it may be an acute condition – which means the first symptoms of mental illness happened rather quickly.\n";
 
     public static Result getText() {
         Map<String, Object> result = new HashMap<>();
@@ -44,9 +46,20 @@ public class RestControllers extends Controller {
     }
 
     private static Result getFollowingText(Map<String, Object> text) {
+        if (text.containsKey("content")) {
+            text.put("content", toHtml((String) text.get("content")));
+        }
         Map<String, Double> features = UnknownWordsAnalyzer.getFeaturesForUser();
         Map<Long, Integer> shownTextsStatistics = ShownTextsTracker.getShownTextsStatisticsForUser();
         TextFinder.getTextId(features, shownTextsStatistics);
         return ok(Json.toJson(text));
+    }
+
+    private static Object toHtml(String text) {
+        String result = "";
+        for (String line: text.split("\n")) {
+            result += "<p>" + line + "</p>";
+        }
+        return result;
     }
 }

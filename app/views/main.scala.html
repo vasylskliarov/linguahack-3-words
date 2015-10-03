@@ -67,35 +67,25 @@
 
     <div class="row">
         <div class="col-lg-12 text-center">
-            <button type="button" class="btn btn-xl">Начать</button>
+            <button type="button" class="btn btn-xl btn-start">Начать</button>
         </div>
     </div>
 
     <div class="row">
         <div class="col-lg-12 text-center">
-            <h1 class="page-header">Read the fucking text!<br/><small>Mark words you don't know</small>
+            <h1 class="page-header">Read the text!<br/><small>Mark words you don't know</small>
             </h1>
         </div>
     </div>
 
     <!-- Team Members Row -->
     <div class="row text">
-        <p>
-        Suicide is when a person chooses to kill himself or herself. When someone kills himself, people say that he has "committed suicide". When a person thinks about killing themselves, the person is said to be suicidal.
-        </p>
 
-        <p>
-        When people start having thoughts about killing themselves it is, or should be, a medical emergency. They should get a suicide risk assessment as soon as possible.
-        </p>
-
-        <p>
-        There are many reasons why a person might think about committing suicide. Most people who are suicidal have some type of mental condition or illness. They may have a chronic condition, which means it has been going on for a long time. But it may be an acute condition – which means the first symptoms of mental illness happened rather quickly.
-        </p>
     </div>
     <div class="row">
         <div class="col-lg-12 text-center">
             <button type="button" class="btn btn-danger">Ничего не понимаю</button>
-            <button type="button" class="btn btn-success">Следующий текст</button>
+            <button type="button" class="btn btn-success btn-next-text">Прочитал, следующий текст</button>
         </div>
     </div>
 
@@ -123,47 +113,83 @@
 
 <script>
 $(document).ready(function() {
-    var showed = [];
-    var template = '<div class="popover" role="tooltip">' +
-            '<div class="arrow"></div>' +
-            '<h3 class="popover-title"></h3>' +
-            '<div class="popover-content"></div>' +
-            '<div class="text-center"><button id="do-not-know-$$INDEX$$" type="button" class="btn btn-danger">Не знаю</button></div></div>';
-    $(".text").lettering('words');
-
-
-    $(".text .word").each(function(index, element) {
-        $(element).on("click", function() {
-            if ($(element).hasClass("dont-know")) {
-                return;
+    $(".btn-start").click(function() {
+        $.ajax({
+            type : 'GET',
+            url: "/text",
+            success: function(data) {
+                initContent(data);
+                console.log(data);
             }
-
-            $(showed).each(function (index, el) {
-                $(el).popover("hide");
-            });
-            showed = [];
-
-            showed.push(this);
-
-            $(element).popover({
-                title: "",
-                content: element.innerText,
-                trigger: 'manual',
-                placement: 'bottom',
-                template: template.replace("$$INDEX$$", index)
-            }).on('shown.bs.popover', function() {
-                // set what happens when user clicks on the button
-                $(element).addClass("not-sure");
-                $("#do-not-know-" + index).on('click', function(){
-                    $(element).addClass("dont-know");
-                    $(element).popover("hide");
-                });
-            }).on('hide.bs.popover', function() {
-                $(element).removeClass("not-sure");
-            }).popover("show");
-
         });
     });
+
+    $(".btn-next-text").click(function() {
+        var unknownWords = [];
+        $(".dont-know").each(function(index, el) {
+            unknownWords.push(this.innerText);
+        });
+
+
+        $.ajax({
+            type : 'POST',
+            data: {unknownWords: unknownWords},
+            url: "/text/next",
+            dataType: "json",
+            success: function(data) {
+                initContent(data);
+                console.log(data);
+            }
+        });
+    });
+
+    function initContent(data) {
+        $(".text").html(data.content);
+
+        var showed = [];
+        var template = '<div class="popover" role="tooltip">' +
+                '<div class="arrow"></div>' +
+                '<h3 class="popover-title"></h3>' +
+                '<div class="popover-content"></div>' +
+                '<div class="text-center"><button id="do-not-know-$$INDEX$$" type="button" class="btn btn-danger">Не знаю</button></div></div>';
+        $(".text").lettering('words');
+
+
+        $(".text .word").each(function(index, element) {
+            $(element).on("click", function() {
+                if ($(element).hasClass("dont-know")) {
+                    return;
+                }
+
+                $(showed).each(function (index, el) {
+                    $(el).popover("hide");
+                });
+                showed = [];
+
+                showed.push(this);
+
+                $(element).popover({
+                    title: "",
+                    content: element.innerText,
+                    trigger: 'manual',
+                    placement: 'bottom',
+                    template: template.replace("$$INDEX$$", index)
+                }).on('shown.bs.popover', function() {
+                    // set what happens when user clicks on the button
+                    $(element).addClass("not-sure");
+                    $("#do-not-know-" + index).on('click', function(){
+                        $(element).addClass("dont-know");
+                        $(element).popover("hide");
+                    });
+                }).on('hide.bs.popover', function() {
+                    $(element).removeClass("not-sure");
+                }).popover("show");
+
+            });
+        });
+    }
+
+
 });
 </script>
 
