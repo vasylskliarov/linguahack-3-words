@@ -1,6 +1,8 @@
 package models;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -33,6 +35,19 @@ public class Word extends Model {
 
     public static List<Word> findAll() {
         return find.all();
+    }
+    
+    public static Map<String, Double> getWordStatistics() {
+    	Map<String, Double> result = new HashMap<String, Double>();
+        List<Word> all = find.all();
+        for (Word word : all) {
+        	Double coef = Double.valueOf(0.0);
+			if (word.getShowedCount() != 0) {
+				coef = (double) (word.getUnknownCount() / (double) word.getShowedCount());
+			}
+			result.put(word.getNormalizedValue(), coef);
+		}
+        return result;
     }
     
     public static Word findByValue(String word) {
