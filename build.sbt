@@ -11,8 +11,8 @@ libraryDependencies ++= Seq(
     javaJdbc,
  	javaEbean,
  	anorm , cache , ws ,
+  	"edu.stanford.nlp" % "stanford-corenlp" % "3.5.2",
 	"postgresql" % "postgresql" % "9.1-901.jdbc4"
 	)
 
 unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )  
-

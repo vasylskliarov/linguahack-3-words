@@ -113,3 +113,4 @@ server.pid
 /dist/
 .cache
 
+/.settings/

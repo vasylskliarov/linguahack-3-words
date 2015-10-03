@@ -122,8 +122,39 @@
 
 <script>
 $(document).ready(function() {
-    console.log("test");
+    var showed = [];
+    var template = '<div class="popover" role="tooltip">' +
+            '<div class="arrow"></div>' +
+            '<h3 class="popover-title"></h3>' +
+            '<div class="popover-content"></div>' +
+            '<div class="text-center"><button id="do-not-know-$$INDEX$$" type="button" class="btn btn-danger">Не знаю</button></div></div>';
     $(".text").lettering('words');
+    $(".text span").each(function(index, element) {
+        $(element).popover({
+            title: "",
+            content: element.innerText,
+            trigger: 'manual',
+            placement: 'bottom',
+            template: template.replace("$$INDEX$$", index)
+        }).on('shown.bs.popover', function() {
+            // set what happens when user clicks on the button
+            $(element).addClass("dont-know")
+            $("#do-not-know-" + index).on('click', function(){
+                $(element).popover("hide");
+            });
+        });
+
+        $(element).on("click", function() {
+            $(showed).each(function (index, el) {
+               $(el).popover("hide");
+            });
+            showed.push(this);
+            $(this).popover("show");
+            $(this).on("click", "button", function() {
+                //console.log('asdf');
+            })
+        });
+    });
 });
 </script>
 
