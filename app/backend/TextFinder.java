@@ -13,14 +13,35 @@ public class TextFinder {
             "There are many reasons why a person might think about committing suicide. Most people who are suicidal have some type of mental condition or illness. They may have a chronic condition, which means it has been going on for a long time. But it may be an acute condition – which means the first symptoms of mental illness happened rather quickly.\n";
 
     public static Long getTextId(Map<String, Double> features, Map<Long, Integer> shownFiles) {
-        return 42L;
+        List<Text> texts = Text.findAll();
+
+        double maxMark = -1.0;
+        Long textID = null;
+
+        for (Text text : texts) {
+            if (shownFiles.get(text.getId()).equals(0)) {
+                List<Word> normalizedWords = text.getNormalizedWords();
+                double currMark = 0.0;
+                for (Word word : normalizedWords) {
+                    String key = word.getNormalizedValue();
+                    if (features.containsKey(key)) {
+                        currMark += features.get(key);
+                    }
+                }
+                if (currMark > maxMark) {
+                    maxMark = currMark;
+                    textID = text.getId();
+                }
+            }
+        }
+        return textID;
     }
 
-    public static String getPlainTextById(Long id){
+    public static String getPlainTextById(Long id) {
         return DUMMY;
     }
 
-    public static List<Word> getNormalizedWordsByTextId(Long id){
+    public static List<Word> getNormalizedWordsByTextId(Long id) {
         return Text.findById(id).getNormalizedWords();
     }
 }
