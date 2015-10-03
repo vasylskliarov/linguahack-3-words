@@ -1,10 +1,10 @@
 package backend;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import play.Play;
+import models.Text;
+import models.Word;
 
 public class TextFinder {
 
@@ -12,11 +12,11 @@ public class TextFinder {
         return 42L;
     }
 
-    public String getPlainTextById(Long id){
+    public static String getPlainTextById(Long id){
         return "test";
     }
 
-    public List<String> getNormalizedTextById(Long id){
-        return Collections.emptyList();
+    public static List<Word> getNormalizedWordsByTextId(Long id){
+        return Text.findById(id).getNormalizedWords();
     }
 }

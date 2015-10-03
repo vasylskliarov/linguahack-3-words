@@ -37,8 +37,8 @@ public class RestControllers extends Controller {
         while (it.hasNext()) {
             unknownWordList.add(it.next().asText());
         }
-        //TODO replace with real call here
-        System.out.println("Words to be updated in db:" + unknownWordList);
+        //TODO get text id from ui
+        UnknownWordsAnalyzer.updateWordsStatistics(TextFinder.getNormalizedWordsByTextId(123L), unknownWordList);
 
         Map<String, Object> result = new HashMap<>();
         result.put("content", DUMMY);

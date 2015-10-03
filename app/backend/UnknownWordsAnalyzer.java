@@ -12,11 +12,10 @@ public class UnknownWordsAnalyzer {
         return Word.getWordStatistics();
     }
 
-    public static void updateWordsStatistics(List<String> encounteredWords, List<String> unknownWords) {
-        Set<String> encounteredWordsSet = new HashSet<>(encounteredWords);
+    public static void updateWordsStatistics(List<Word> encounteredWords, List<String> unknownWords) {
+        Set<Word> encounteredWordsSet = new HashSet<>(encounteredWords);
         Set<String> unknownWordsSet = new HashSet<>(unknownWords);
-        encounteredWordsSet.stream().forEach(w -> {
-            Word word = Word.findByValue(w);
+        encounteredWordsSet.stream().forEach(word -> {
             word.setShowedCount(word.getShowedCount() + 1);
             word.update();
         });
