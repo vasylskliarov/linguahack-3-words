@@ -105,8 +105,8 @@ public class Text extends Model {
 		return normalizedText;
 	}
 
-	public void setNormalized_text(String normalized_text) {
-		this.normalizedText = normalized_text;
+	public void setNormalizedText(String normalizedText) {
+		this.normalizedText = normalizedText;
 	}
 
 	public int getShowedCount() {
@@ -116,6 +116,4 @@ public class Text extends Model {
 	public void setShowedCount(int showedCount) {
 		this.showedCount = showedCount;
 	}
-	
-	
 }

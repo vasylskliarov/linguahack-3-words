@@ -14,6 +14,7 @@ libraryDependencies ++= Seq(
   javaEbean,
   anorm, cache, ws,
   "edu.stanford.nlp" % "stanford-corenlp" % "3.5.2",
+  "org.jsoup" % "jsoup" % "1.7.2",
   "postgresql" % "postgresql" % "9.1-901.jdbc4"
 )
 
