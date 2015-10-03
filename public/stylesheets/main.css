@@ -1,8 +1,38 @@
 body {
     padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+    font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
-
 
 footer {
     margin: 50px 0;
+}
+
+.text {
+    font-size: 2em;
+}
+
+.text span:hover {
+    color: white;
+    background-color: #c0a16b;
+}
+
+.btn-xl {
+    color: #fff;
+    background-color: #fed136;
+    border-color: #fed136;
+
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 18px;
+    padding: 20px 40px
+}
+
+.btn-xl:hover, .btn-xl:focus, .btn-xl:active, .btn-xl.active, .open .dropdown-toggle.btn-xl {
+    color: #fff;
+    background-color: #fec503;
+    border-color: #f6bf01
+}
+
+.btn-xl:active, .btn-xl.active, .open .dropdown-toggle.btn-xl {
+    background-image: none
 }

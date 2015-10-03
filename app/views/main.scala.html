@@ -1,6 +1,4 @@
-@(title: String)(content: Html)
-
-<!DOCTYPE html>
+@(title: String)(content: Html)<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -24,6 +22,7 @@
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
@@ -66,9 +65,37 @@
 <!-- Page Content -->
 <div class="container">
 
-    <!-- Team Members Row -->
     <div class="row">
-        @content
+        <div class="col-lg-12 text-center">
+            <button type="button" class="btn btn-xl">Начать</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 text-center">
+            <h1 class="page-header">Read the fucking text!</h1>
+        </div>
+    </div>
+
+    <!-- Team Members Row -->
+    <div class="row text">
+        <p>
+        Suicide is when a person chooses to kill himself or herself. When someone kills himself, people say that he has "committed suicide". When a person thinks about killing themselves, the person is said to be suicidal.
+        </p>
+
+        <p>
+        When people start having thoughts about killing themselves it is, or should be, a medical emergency. They should get a suicide risk assessment as soon as possible.
+        </p>
+
+        <p>
+        There are many reasons why a person might think about committing suicide. Most people who are suicidal have some type of mental condition or illness. They may have a chronic condition, which means it has been going on for a long time. But it may be an acute condition – which means the first symptoms of mental illness happened rather quickly.
+        </p>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 text-center">
+            <button type="button" class="btn btn-danger">Ничего не понимаю</button>
+            <button type="button" class="btn btn-success">Следующий текст</button>
+        </div>
     </div>
 
     <hr>
@@ -87,11 +114,18 @@
 </div>
 <!-- /.container -->
 
-<!-- jQuery -->
-<script src="js/jquery.js"></script>
-
 <!-- Bootstrap Core JavaScript -->
-<script src="js/bootstrap.min.js"></script>
+<script src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")"></script>
+<script src="@routes.Assets.at("javascripts/jquery.lettering-0.6.1.min.js")"></script>
+<script src="@routes.Assets.at("javascripts/bootstrap.min.js")"></script>
+
+
+<script>
+$(document).ready(function() {
+    console.log("test");
+    $(".text").lettering('words');
+});
+</script>
 
 </body>
 
