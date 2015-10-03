@@ -51,7 +51,13 @@ public class Word extends Model {
     }
     
     public static Word findByValue(String word) {
-        return find.where().eq("normalizedValue", word).findUnique();
+        Word wordObj = find.where().eq("normalizedValue", word).findUnique();
+        if (wordObj == null) {
+        	wordObj = new Word();
+        	wordObj.setNormalizedValue(word);
+        	wordObj.save();
+        }
+		return wordObj;
     }
     
     public static void updateAll(List<Word> words) {
