@@ -127,15 +127,16 @@ $(document).ready(function() {
     $(".btn-next-text").click(function() {
         var unknownWords = [];
         $(".dont-know").each(function(index, el) {
-            unknownWords.push(this.innerText);
+            unknownWords.push(this.innerText.replace(/\W/g, ''));
         });
 
 
         $.ajax({
             type : 'POST',
-            data: {unknownWords: unknownWords},
+            data: JSON.stringify({unknownWords: unknownWords}),
             url: "/text/next",
             dataType: "json",
+            contentType : 'application/json',
             success: function(data) {
                 initContent(data);
                 console.log(data);
@@ -170,7 +171,7 @@ $(document).ready(function() {
 
                 $(element).popover({
                     title: "",
-                    content: element.innerText,
+                    content: element.innerText.replace(/\W/g, ''),
                     trigger: 'manual',
                     placement: 'bottom',
                     template: template.replace("$$INDEX$$", index)

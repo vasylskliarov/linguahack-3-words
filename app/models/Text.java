@@ -2,7 +2,9 @@ package models;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -43,6 +45,14 @@ public class Text extends Model {
         return find.where().eq("fileName", fileName).findUnique();
     }
     
+    public static Map<Long, Integer> getTextStatistics() {
+    	Map<Long, Integer> result = new HashMap<Long, Integer>();
+        List<Text> all = find.all();
+        for (Text text : all) {
+        	result.put(text.getId(), text.getShowedCount());
+		}
+        return result;
+    }
     
     public List<Word> getNormalizedWords() {
     	List<Word> words = new ArrayList<Word>();
