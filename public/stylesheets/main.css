@@ -11,7 +11,7 @@ footer {
     font-size: 2em;
 }
 
-.text span:hover, .text .dont-know {
+.text .word:hover, .text .dont-know, .text .not-sure {
     color: white;
     background-color: #c0a16b;
 }
