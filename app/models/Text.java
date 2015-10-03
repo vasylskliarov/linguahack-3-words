@@ -116,4 +116,8 @@ public class Text extends Model {
 	public void setShowedCount(int showedCount) {
 		this.showedCount = showedCount;
 	}
+
+	public static Text findById(Long id) {
+		return find.where().eq("id", id).findUnique();
+	}
 }

@@ -41,19 +41,16 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Start Bootstrap</a>
+            <a class="navbar-brand" href="#">3 Words</a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li>
-                    <a href="#">About</a>
+                    <a href="#">О нас</a>
                 </li>
                 <li>
-                    <a href="#">Services</a>
-                </li>
-                <li>
-                    <a href="#">Contact</a>
+                    <a href="#">Контакты</a>
                 </li>
             </ul>
         </div>
@@ -62,136 +59,62 @@
     <!-- /.container -->
 </nav>
 
+<header>
+    <div class="container">
+        <div class="intro-text">
+            <div class="intro-lead-in">LinguaHack 2015 Project!</div>
+            <div class="intro-heading">Мы знаем, что вы знаете 3 слова</div>
+            <a href="#services" class="page-scroll btn btn-xl btn-start">Начать</a>
+        </div>
+    </div>
+</header>
+
 <!-- Page Content -->
-<div class="container">
-
-    <div class="row">
-        <div class="col-lg-12 text-center">
-            <button type="button" class="btn btn-xl btn-start">Начать</button>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-lg-12 text-center">
-            <h1 class="page-header">Read the text!<br/><small>Mark words you don't know</small>
-            </h1>
-        </div>
-    </div>
-
-    <!-- Team Members Row -->
-    <div class="row text">
-
-    </div>
-    <div class="row">
-        <div class="col-lg-12 text-center">
-            <button type="button" class="btn btn-danger">Ничего не понимаю</button>
-            <button type="button" class="btn btn-success btn-next-text">Прочитал, следующий текст</button>
-        </div>
-    </div>
-
-    <hr>
-
-    <!-- Footer -->
-    <footer>
+<section id="services">
+    <div class="container">
         <div class="row">
-            <div class="col-lg-12">
-                <p>LinguaHack 2015 project "linguahack-3-words"</p>
+            <div class="col-lg-12 text-center">
+                <h1 class="page-header">Прочитайте текст<br/><small>Отметьте незнакомые слова</small>
+                </h1>
             </div>
-            <!-- /.col-lg-12 -->
         </div>
-        <!-- /.row -->
-    </footer>
 
-</div>
+        <!-- Team Members Row -->
+        <div class="row text">
+
+        </div>
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <button type="button" class="btn btn-danger">Не понял ни одного слова</button>
+                <button type="button" class="btn btn-success btn-next-text">Прочитал, следующий текст</button>
+            </div>
+        </div>
+
+        <hr>
+
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>LinguaHack 2015 project "linguahack-3-words"</p>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+        </footer>
+
+    </div>
+</section>
 <!-- /.container -->
 
 <!-- Bootstrap Core JavaScript -->
 <script src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")"></script>
 <script src="@routes.Assets.at("javascripts/jquery.lettering-0.6.1.min.js")"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
 <script src="@routes.Assets.at("javascripts/bootstrap.min.js")"></script>
-
-
-<script>
-$(document).ready(function() {
-    $(".btn-start").click(function() {
-        $.ajax({
-            type : 'GET',
-            url: "/text",
-            success: function(data) {
-                initContent(data);
-                console.log(data);
-            }
-        });
-    });
-
-    $(".btn-next-text").click(function() {
-        var unknownWords = [];
-        $(".dont-know").each(function(index, el) {
-            unknownWords.push(this.innerText);
-        });
-
-
-        $.ajax({
-            type : 'POST',
-            data: {unknownWords: unknownWords},
-            url: "/text/next",
-            dataType: "json",
-            success: function(data) {
-                initContent(data);
-                console.log(data);
-            }
-        });
-    });
-
-    function initContent(data) {
-        $(".text").html(data.content);
-
-        var showed = [];
-        var template = '<div class="popover" role="tooltip">' +
-                '<div class="arrow"></div>' +
-                '<h3 class="popover-title"></h3>' +
-                '<div class="popover-content"></div>' +
-                '<div class="text-center"><button id="do-not-know-$$INDEX$$" type="button" class="btn btn-danger">Не знаю</button></div></div>';
-        $(".text").lettering('words');
-
-
-        $(".text .word").each(function(index, element) {
-            $(element).on("click", function() {
-                if ($(element).hasClass("dont-know")) {
-                    return;
-                }
-
-                $(showed).each(function (index, el) {
-                    $(el).popover("hide");
-                });
-                showed = [];
-
-                showed.push(this);
-
-                $(element).popover({
-                    title: "",
-                    content: element.innerText,
-                    trigger: 'manual',
-                    placement: 'bottom',
-                    template: template.replace("$$INDEX$$", index)
-                }).on('shown.bs.popover', function() {
-                    // set what happens when user clicks on the button
-                    $(element).addClass("not-sure");
-                    $("#do-not-know-" + index).on('click', function(){
-                        $(element).addClass("dont-know");
-                        $(element).popover("hide");
-                    });
-                }).on('hide.bs.popover', function() {
-                    $(element).removeClass("not-sure");
-                }).popover("show");
-
-            });
-        });
-    }
-
-
-});
-</script>
+<script src="@routes.Assets.at("javascripts/classie.js")"></script>
+<script src="@routes.Assets.at("javascripts/cbpAnimatedHeader.js")"></script>
+<script src="@routes.Assets.at("javascripts/main.js")"></script>
 
 </body>
 
