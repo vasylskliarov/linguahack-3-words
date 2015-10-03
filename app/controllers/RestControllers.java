@@ -3,19 +3,14 @@ package controllers;
 import backend.ShownTextsTracker;
 import backend.TextFinder;
 import backend.UnknownWordsAnalyzer;
-import backend.ShownTextsTracker;
-import backend.TextFinder;
-import backend.UnknownWordsAnalyzer;
 import com.fasterxml.jackson.databind.JsonNode;
 import play.libs.Json;
 import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
 
 /**
  * Created by hlib on 03.10.15.
