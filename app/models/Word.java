@@ -14,6 +14,8 @@ import play.db.ebean.Model;
 @Table(name="word")
 public class Word extends Model {
 
+	private static final long serialVersionUID = 1L;
+
 	@Id
     private long id;
 	
@@ -31,6 +33,16 @@ public class Word extends Model {
 
     public static List<Word> findAll() {
         return find.all();
+    }
+    
+    public static Word findByValue(String word) {
+        return find.where().eq("normalizedValue", word).findUnique();
+    }
+    
+    public static void updateAll(List<Word> words) {
+        for (Word word : words) {
+        	word.update();
+		}
     }
     
     // getters and setters
