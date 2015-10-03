@@ -43,9 +43,9 @@ public class Word extends Model {
         for (Word word : all) {
         	Double coef = Double.valueOf(0.0);
 			if (word.getShowedCount() != 0) {
-				coef = (double) (word.getUnknownCount() / (double) word.getShowedCount());
+				coef = 1 - (word.getUnknownCount() / (double) word.getShowedCount());
+				result.put(word.getNormalizedValue(), coef);
 			}
-			result.put(word.getNormalizedValue(), coef);
 		}
         return result;
     }
