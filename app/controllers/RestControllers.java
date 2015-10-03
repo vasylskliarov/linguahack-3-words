@@ -1,5 +1,8 @@
 package controllers;
 
+import backend.ShownTextsTracker;
+import backend.TextFinder;
+import backend.UnknownWordsAnalyzer;
 import com.fasterxml.jackson.databind.JsonNode;
 import play.mvc.BodyParser;
 import play.mvc.Controller;
@@ -8,6 +11,7 @@ import play.mvc.Result;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by hlib on 03.10.15.
@@ -34,6 +38,9 @@ public class RestControllers extends Controller {
     }
 
     private static Result getFollowingText() {
+        Map<String, Double> features = UnknownWordsAnalyzer.getFeaturesForUser();
+        Map<Long, Integer> shownTextsStatistics = ShownTextsTracker.getShownTextsStatisticsForUser();
+        TextFinder.getTextId(features, shownTextsStatistics);
         String text = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
         return ok("{\"content\": " + text + "}");
     }
