@@ -4,7 +4,7 @@
 
 # Home page
 GET     /                           controllers.Application.index
-GET     /text/                      controllers.RestControllers.getText
+GET     /text                       controllers.RestControllers.getText
 POST    /text/next                  controllers.RestControllers.getNextText
 
 # Map static resources from the /public folder to the /assets URL path
