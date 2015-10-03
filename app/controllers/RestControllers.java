@@ -1,5 +1,8 @@
 package controllers;
 
+import backend.ShownTextsTracker;
+import backend.TextFinder;
+import backend.UnknownWordsAnalyzer;
 import com.fasterxml.jackson.databind.JsonNode;
 import play.libs.Json;
 import play.mvc.BodyParser;
@@ -46,6 +49,9 @@ public class RestControllers extends Controller {
         if (text.containsKey("content")) {
             text.put("content", toHtml((String) text.get("content")));
         }
+        Map<String, Double> features = UnknownWordsAnalyzer.getFeaturesForUser();
+        Map<Long, Integer> shownTextsStatistics = ShownTextsTracker.getShownTextsStatisticsForUser();
+        TextFinder.getTextId(features, shownTextsStatistics);
         return ok(Json.toJson(text));
     }
 
