@@ -1,16 +1,15 @@
 package controllers;
 
+import backend.Dao;
 import backend.TextFinder;
+import backend.WordsStatisticsService;
 import models.Text;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 public class Application extends Controller {
@@ -20,8 +19,12 @@ public class Application extends Controller {
 
     public static Result texts() {
         List<Text> result = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
-            result.add(new Text(i + 1, "Dummy Text"));
+
+        Map<String, Double> features = WordsStatisticsService.getFeaturesForUser();
+        List<Long> textIds = new TextFinder().getTextIds(features);
+        for (Long textId: textIds) {
+            Text text = Text.findById(textId);
+            result.add(text);
         }
 
         return ok(texts.render(result));
