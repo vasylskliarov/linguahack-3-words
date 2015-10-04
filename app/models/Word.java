@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -20,7 +21,8 @@ public class Word extends Model {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-    private long id;
+	@GeneratedValue
+	private long id;
 	
 	@Constraints.Required
     @Formats.NonEmpty
@@ -56,8 +58,8 @@ public class Word extends Model {
         if (wordObj == null) {
         	wordObj = new Word();
         	wordObj.setNormalizedValue(word);
-
-			new Dao().insertWord(wordObj);
+        	wordObj.save();
+			//new Dao().insertWord(wordObj);
         }
 		return wordObj;
     }

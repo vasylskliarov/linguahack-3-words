@@ -60,20 +60,21 @@ public class Text extends Model {
 	public static long getRandomTextId() {
     	Random random = new Random();
     	
-    	int maxId = Text.find.where()
-    					.orderBy("id desc")
-    					.getFirstRow();
+    	int size = Text.find.all().size();
+    					//.orderBy("id desc")
+    					//.setMaxRows(1).findUnique().getId();
     	long textId = -1;
     	int count = 0;
     	do {
-    		int nextId = random.nextInt(maxId);
-    		Text text = find.where().eq("id", nextId).findUnique();
+    		int nextId = random.nextInt(size);
+    		Text text = //find.where().eq("id", nextId).findUnique();
+    				Text.find.where().setFirstRow(nextId).setMaxRows(1).findUnique();
     		if (text != null) {
     			textId = text.getId();
     		}
     		count++;
-    	} while ((textId != -1) || (count != 100) );
-    	
+    	} while ((textId == -1) || (count != 10000) );
+    	System.out.println("Random text id: " + textId);
         return textId;
     }
 

@@ -17,4 +17,19 @@ CREATE TABLE text (
 	CONSTRAINT text_pkey PRIMARY KEY (id)
 );
 
+CREATE INDEX text_id_idx
+  ON text
+  USING btree
+  (id);
+  
+CREATE INDEX id
+  ON word
+  USING btree
+  (id);
+
+CREATE INDEX normalized_value
+  ON word
+  USING btree
+  (normalized_value COLLATE pg_catalog."default");
+  
 # --- !Downs

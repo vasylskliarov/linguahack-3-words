@@ -15,13 +15,12 @@ public class TextFinder {
             "When people start having thoughts about killing themselves it is, or should be, a medical emergency. They should get a suicide risk assessment as soon as possible.\n" +
             "There are many reasons why a person might think about committing suicide. Most people who are suicidal have some type of mental condition or illness. They may have a chronic condition, which means it has been going on for a long time. But it may be an acute condition – which means the first symptoms of mental illness happened rather quickly.\n";
 
-    private Dao dao = new Dao();
-
     public Long getTextId(Map<String, Double> features, Map<Long, Integer> shownFiles) {
-        if (features.isEmpty()) {
-            return dao.getRandomTextId();
+        
+    	if (features.isEmpty()) {
+            return Text.getRandomTextId();
         }
-        List<Text> texts = dao.getAllTexts();
+        List<Text> texts = Text.findAll();
 
         double minDeviation = Double.MAX_VALUE;
         Long textID = null;
@@ -63,7 +62,4 @@ public class TextFinder {
         }
     }
 
-    public void setDao(Dao dao) {
-        this.dao = dao;
-    }
 }
