@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -53,7 +54,22 @@ public class Text extends Model {
         return find.where().eq("fileName", fileName).findUnique();
     }
 
-	//TODO get random text id
+	public static long getRandomTextId() {
+    	Random random = new Random();
+    	int maxId = find.getMaxRows() - 1;
+    	long textId = -1;
+    	int count = 0;
+    	do {
+    		int nextId = random.nextInt(maxId) + 1;
+    		Text text = find.where().eq("id", nextId).findUnique();
+    		if (text != null) {
+    			textId = text.getId();
+    		}
+    		count++;
+    	} while ((textId != -1) || (count != 100) );
+    	
+        return textId;
+    }
 
 	//TODO do not load all the texts into memory for putting Id into map
     public static Map<Long, Integer> getTextStatistics() {
