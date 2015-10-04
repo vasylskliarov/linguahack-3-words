@@ -10,8 +10,7 @@ import java.util.Map;
  */
 public class ShownTextsTracker {
     public static Map<Long, Integer> getShownTextsStatisticsForUser() {
-        //TODO replace with call to dao here
-        return ImmutableMap.of(12345L, 12);
+        return Text.getTextStatistics();
     }
 
     public static void trackTextView(Long textId) {
