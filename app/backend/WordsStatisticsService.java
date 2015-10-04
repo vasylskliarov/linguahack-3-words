@@ -9,6 +9,7 @@ import java.util.*;
  */
 public class WordsStatisticsService {
     public static Map<String, Double> getFeaturesForUser() {
+
         return Word.getWordStatistics();
     }
     private static Dao dao = new Dao();
@@ -16,13 +17,7 @@ public class WordsStatisticsService {
     public static void updateWordsStatistics(List<String> encounteredWords, List<String> unknownWords) {
         Set<String> encounteredWordsSet = new HashSet<>(encounteredWords);
         Set<String> unknownWordsSet = new HashSet<>(unknownWords);
-        encounteredWordsSet.stream().forEach(w -> {
-            Word word = Word.findByValue(w);
-            dao.updateWordShown(word);
-        });
-        unknownWordsSet.stream().forEach(w -> {
-            Word word = Word.findByValue(w);
-            dao.updateWordUnknown(word);
-        });
+        dao.updateWordsShown(encounteredWordsSet);
+        dao.updateWordsUnknown(unknownWordsSet);
     }
 }

@@ -19,6 +19,8 @@ public class TextFinder {
     private Dao dao = new Dao();
 
     public Long getTextId(Map<String, Double> features, Map<Long, Integer> shownFiles) {
+        System.out.println("Finding text with the following map: " + features);
+
         if (features.isEmpty()) {
             return dao.getRandomTextId();
         }

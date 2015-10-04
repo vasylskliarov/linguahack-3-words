@@ -51,7 +51,6 @@ public class RestControllers extends Controller {
         if (Dao.cachedTexts != null) {
             Text textToRemove = new Text();
             textToRemove.setId(textId);
-            System.out.println("Remooooooooooooved " + Dao.cachedTexts.remove(textToRemove));
         }
         String plainText = TextFinder.getPlainTextById(textId);
         session().put("textId", Long.toString(textId));

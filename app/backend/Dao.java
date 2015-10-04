@@ -18,9 +18,7 @@ public class Dao {
 
     public static Set<Text> cachedTexts = null;
     static {
-        long start = Clock.systemDefaultZone().millis();
         cachedTexts = new HashSet<>(Text.findAll());
-        System.out.println("!!!!!!!!!!!!!!!!!  " + (Clock.systemDefaultZone().millis() - start));
     }
 
     private final static Long[] STUB_TEXT_IDS = {-695500318L, 994661804L, 687910408L};
@@ -76,32 +74,40 @@ public class Dao {
         }
     }
 
-    public void updateWordShown(Word word) { // ...
-        String insertTableSQL = "UPDATE word SET showed_count = showed_count + 1 WHERE id = ?";
-
+    public void updateWordsShown(Collection<String> words) { // ...
         try {
+            dbConnection.setAutoCommit(false);
+            String insertTableSQL = "UPDATE word SET showed_count = showed_count + 1 WHERE normalized_value = ?";
             PreparedStatement preparedStatement = dbConnection.prepareStatement(insertTableSQL);
 
-            preparedStatement.setInt(1, (int) word.getId());
+            for (String word : words) {
+                preparedStatement.setString(1, word);
+                preparedStatement.addBatch();
+            }
 
-            // execute insert SQL stetement
-            preparedStatement.executeUpdate();
-
+            preparedStatement.executeBatch();
+            dbConnection.commit();
+            dbConnection.setAutoCommit(true);
+    
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public void updateWordUnknown(Word word) {
-        String insertTableSQL = "UPDATE word SET unknown_count = unknown_count + 1 WHERE id = ?";
-
+    public void updateWordsUnknown(Collection<String> words) {
         try {
+            dbConnection.setAutoCommit(false);
+            String insertTableSQL = "UPDATE word SET unknown_count = unknown_count + 1 WHERE normalized_value = ?";
             PreparedStatement preparedStatement = dbConnection.prepareStatement(insertTableSQL);
 
-            preparedStatement.setInt(1, (int) word.getId());
+            for (String word : words) {
+                preparedStatement.setString(1, word);
+                preparedStatement.addBatch();
+            }
 
-            // execute insert SQL stetement
-            preparedStatement.executeUpdate();
+            preparedStatement.executeBatch();
+            dbConnection.commit();
+            dbConnection.setAutoCommit(true);
 
         } catch (SQLException e) {
             e.printStackTrace();
