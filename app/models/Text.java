@@ -84,7 +84,7 @@ public class Text extends Model {
     public List<Word> getNormalizedWords() {
     	List<Word> words = new ArrayList<Word>();
     	
-    	List<String> stringWords = Arrays.asList(normalizedText.split(","));
+    	List<String> stringWords = Arrays.asList(normalizedText.split(" "));
     	for (String stringWord : stringWords) {
     		Word word = Word.findByValue(stringWord);
     		if (word != null) {

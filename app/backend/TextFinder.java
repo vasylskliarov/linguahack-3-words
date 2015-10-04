@@ -51,11 +51,8 @@ public class TextFinder {
     }
 
     public static String getPlainTextById(Long id) {
-        return DUMMY;
-    }
-
-    public static String getDummy() {
-        return DUMMY;
+        //return DUMMY;
+        return Text.findById(id).getText();
     }
 
     public List<Word> getNormalizedWordsByTextId(Long id) {

@@ -15,6 +15,7 @@ public class ShownTextsTracker {
 
     public static void trackTextView(Long textId) {
         Text text = Text.findById(textId);
+        System.out.println(textId);
         text.setShowedCount(text.getShowedCount() + 1);
         text.update();
     }
