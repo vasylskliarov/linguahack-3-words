@@ -3,6 +3,7 @@ package backend;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import models.Text;
 import models.Word;
@@ -21,7 +22,7 @@ public class TextFinder {
         if (features.isEmpty()) {
             return dao.getRandomTextId();
         }
-        List<Text> texts = dao.getAllTexts();
+        Set<Text> texts = dao.getAllTexts();
 
         double minDeviation = Double.MAX_VALUE;
         Long textID = null;

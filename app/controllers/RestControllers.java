@@ -1,9 +1,11 @@
 package controllers;
 
+import backend.Dao;
 import backend.ShownTextsTracker;
 import backend.TextFinder;
 import backend.WordsStatisticsService;
 import com.fasterxml.jackson.databind.JsonNode;
+import models.Text;
 import play.libs.Json;
 import play.mvc.BodyParser;
 import play.mvc.Controller;
@@ -46,6 +48,11 @@ public class RestControllers extends Controller {
         Map<Long, Integer> shownTextsStatistics = Collections.<Long, Integer>emptyMap();
         Long textId = new TextFinder().getTextId(features, shownTextsStatistics);
         System.out.println(textId);
+        if (Dao.cachedTexts != null) {
+            Text textToRemove = new Text();
+            textToRemove.setId(textId);
+            System.out.println("Remooooooooooooved " + Dao.cachedTexts.remove(textToRemove));
+        }
         String plainText = TextFinder.getPlainTextById(textId);
         session().put("textId", Long.toString(textId));
 

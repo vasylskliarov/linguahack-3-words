@@ -8,9 +8,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.Clock;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Created by hlib on 03.10.15.
@@ -18,17 +16,17 @@ import java.util.Random;
 public class Dao {
 
 
-    private static List<Text> cachedTexts = null;
+    public static Set<Text> cachedTexts = null;
     static {
         long start = Clock.systemDefaultZone().millis();
-        cachedTexts = Text.findAll();
+        cachedTexts = new HashSet<>(Text.findAll());
         System.out.println("!!!!!!!!!!!!!!!!!  " + (Clock.systemDefaultZone().millis() - start));
     }
 
     private final static Long[] STUB_TEXT_IDS = {-695500318L, 994661804L, 687910408L};
     final Random random = new Random();
 
-    public List<Text> getAllTexts() {
+    public Set<Text> getAllTexts() {
         return cachedTexts;
     }
 
