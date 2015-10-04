@@ -11,19 +11,18 @@ public class WordsStatisticsService {
     public static Map<String, Double> getFeaturesForUser() {
         return Word.getWordStatistics();
     }
+    private static Dao dao = new Dao();
 
     public static void updateWordsStatistics(List<String> encounteredWords, List<String> unknownWords) {
         Set<String> encounteredWordsSet = new HashSet<>(encounteredWords);
         Set<String> unknownWordsSet = new HashSet<>(unknownWords);
         encounteredWordsSet.stream().forEach(w -> {
             Word word = Word.findByValue(w);
-            word.setShowedCount(word.getShowedCount() + 1);
-            word.update();
+            dao.updateWordShown(word);
         });
         unknownWordsSet.stream().forEach(w -> {
             Word word = Word.findByValue(w);
-            word.setUnknownCount(word.getUnknownCount() + 1);
-            word.update();
+            dao.updateWordUnknown(word);
         });
     }
 }

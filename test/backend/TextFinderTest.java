@@ -26,19 +26,19 @@ public class TextFinderTest {
             .put("yesterday", 0.75)
             .build();
 
-    @Test
-    public void testGetTextId() throws Exception {
-        Word word1 = new Word();
-        word1.setNormalizedValue("what");
-        Word word2 = new Word();
-        word2.setNormalizedValue("why");
-
-        Text text = mock(Text.class);
-        when(text.getNormalizedWords()).thenReturn(Arrays.asList(word1, word2));
-        Dao dao = mock(Dao.class);
-        when(dao.getAllTexts()).thenReturn(Arrays.asList(text));
-        TextFinder textFinder = new TextFinder();
-        textFinder.setDao(dao);
-        textFinder.getTextId(WORDS_STATISTICS, Collections.emptyMap());
-    }
+//    @Test
+//    public void testGetTextId() throws Exception {
+//        Word word1 = new Word();
+//        word1.setNormalizedValue("what");
+//        Word word2 = new Word();
+//        word2.setNormalizedValue("why");
+//
+//        Text text = mock(Text.class);
+//        when(text.getNormalizedWords()).thenReturn(Arrays.asList(word1, word2));
+//        Dao dao = mock(Dao.class);
+//        when(dao.getAllTexts()).thenReturn(Arrays.asList(text));
+//        TextFinder textFinder = new TextFinder();
+//        textFinder.setDao(dao);
+//        textFinder.getTextId(WORDS_STATISTICS, Collections.emptyMap());
+//    }
 }

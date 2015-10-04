@@ -19,16 +19,16 @@ public class Dao {
 
 
     private static List<Text> cachedTexts = null;
+    static {
+        long start = Clock.systemDefaultZone().millis();
+        cachedTexts = Text.findAll();
+        System.out.println("!!!!!!!!!!!!!!!!!  " + (Clock.systemDefaultZone().millis() - start));
+    }
 
     private final static Long[] STUB_TEXT_IDS = {-695500318L, 994661804L, 687910408L};
     final Random random = new Random();
 
     public List<Text> getAllTexts() {
-        long start = Clock.systemDefaultZone().millis();
-        if (cachedTexts == null) {
-            cachedTexts = Text.findAll();
-        }
-        System.out.println("!!!!!!!!!!!!!!!!!  " + (Clock.systemDefaultZone().millis() - start));
         return cachedTexts;
     }
 
@@ -46,39 +46,17 @@ public class Dao {
     private static final String DB_CONNECTION = "jdbc:postgresql://46.101.250.217:5432/linguahack3words";
     private static final String DB_USER = "postgres";
     private static final String DB_PASSWORD = "k6EJRRL8";
-    private static Connection dbConnection = getDBConnection();
-
-    private static Connection getDBConnection() {
-
-        Connection dbConnection = null;
-
+    private static Connection dbConnection = null;
+    static {
         try {
-
-            Class.forName(DB_DRIVER);
-
-        } catch (ClassNotFoundException e) {
-
-            System.out.println(e.getMessage());
-
-        }
-
-        try {
-
             dbConnection = DriverManager.getConnection(
                     DB_CONNECTION, DB_USER, DB_PASSWORD);
-
         } catch (SQLException e) {
-
-            System.out.println(e.getMessage());
-
+            e.printStackTrace();
         }
-
-        return dbConnection;
-
     }
 
     public void insertWord(Word word) {
-
         String insertTableSQL = "INSERT INTO Word"
                 + "(id, normalized_value, showed_count, unknown_count) VALUES"
                 + "(?,?,?,?)";
@@ -91,6 +69,38 @@ public class Dao {
             preparedStatement.setString(2, word.getNormalizedValue());
             preparedStatement.setInt(3, 0);
             preparedStatement.setInt(4, 0);
+
+            // execute insert SQL stetement
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateWordShown(Word word) { // ...
+        String insertTableSQL = "UPDATE word SET showed_count = showed_count + 1 WHERE id = ?";
+
+        try {
+            PreparedStatement preparedStatement = dbConnection.prepareStatement(insertTableSQL);
+
+            preparedStatement.setInt(1, (int) word.getId());
+
+            // execute insert SQL stetement
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateWordUnknown(Word word) {
+        String insertTableSQL = "UPDATE word SET unknown_count = unknown_count + 1 WHERE id = ?";
+
+        try {
+            PreparedStatement preparedStatement = dbConnection.prepareStatement(insertTableSQL);
+
+            preparedStatement.setInt(1, (int) word.getId());
 
             // execute insert SQL stetement
             preparedStatement.executeUpdate();
