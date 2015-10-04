@@ -42,7 +42,8 @@ public class RestControllers extends Controller {
 
     private static Result getFollowingText() {
         Map<String, Double> features = WordsStatisticsService.getFeaturesForUser();
-        Map<Long, Integer> shownTextsStatistics = ShownTextsTracker.getShownTextsStatisticsForUser();
+        //Map<Long, Integer> shownTextsStatistics = ShownTextsTracker.getShownTextsStatisticsForUser();
+        Map<Long, Integer> shownTextsStatistics = Collections.<Long, Integer>emptyMap();
         Long textId = new TextFinder().getTextId(features, shownTextsStatistics);
         String plainText = TextFinder.getPlainTextById(textId);
 
