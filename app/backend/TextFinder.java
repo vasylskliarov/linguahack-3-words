@@ -29,10 +29,9 @@ public class TextFinder {
         for (Text text : texts) {
             int counter = 0;
             //if (shownFiles.get(text.getId()) == 0) {
-                List<Word> normalizedWords = text.getNormalizedWords();
+                List<String> normalizedWords = text.getNormalizedWords();
                 double cumulativeUnknownness = 0.0;
-                for (Word word : normalizedWords) {
-                    String key = word.getNormalizedValue();
+                for (String key : normalizedWords) {
                     if (features.containsKey(key)) {
                         cumulativeUnknownness += features.get(key);
                         ++counter;
@@ -55,7 +54,7 @@ public class TextFinder {
         return Text.findById(id).getText();
     }
 
-    public List<Word> getNormalizedWordsByTextId(Long id) {
+    public List<String> getNormalizedWordsByTextId(Long id) {
         Text foundText = Text.findById(id);
         if (foundText == null) {
             return Collections.emptyList();

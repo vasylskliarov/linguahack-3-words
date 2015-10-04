@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.time.Clock;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -23,9 +24,11 @@ public class Dao {
     final Random random = new Random();
 
     public List<Text> getAllTexts() {
+        long start = Clock.systemDefaultZone().millis();
         if (cachedTexts == null) {
             cachedTexts = Text.findAll();
         }
+        System.out.println("!!!!!!!!!!!!!!!!!  " + (Clock.systemDefaultZone().millis() - start));
         return cachedTexts;
     }
 
