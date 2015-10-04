@@ -17,6 +17,9 @@ public class TextFinder {
     private Dao dao = new Dao();
 
     public Long getTextId(Map<String, Double> features, Map<Long, Integer> shownFiles) {
+        if (features.isEmpty()) {
+            return dao.getRandomTextId();
+        }
         List<Text> texts = dao.getAllTexts();
 
         double minDeviation = Double.MAX_VALUE;
@@ -56,5 +59,9 @@ public class TextFinder {
 
     public List<Word> getNormalizedWordsByTextId(Long id) {
         return Text.findById(id).getNormalizedWords();
+    }
+
+    public void setDao(Dao dao) {
+        this.dao = dao;
     }
 }

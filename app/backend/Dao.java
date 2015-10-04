@@ -13,4 +13,9 @@ public class Dao {
     public List<Text> getAllTexts() {
         return Text.findAll();
     }
+
+    public Long getRandomTextId() {
+        // call Text method to query random text id
+        return 42L;
+    }
 }

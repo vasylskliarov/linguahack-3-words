@@ -52,7 +52,10 @@ public class Text extends Model {
     public static Text findByFileName(String fileName) {
         return find.where().eq("fileName", fileName).findUnique();
     }
-    
+
+	//TODO get random text id
+
+	//TODO do not load all the texts into memory for putting Id into map
     public static Map<Long, Integer> getTextStatistics() {
     	Map<Long, Integer> result = new HashMap<Long, Integer>();
         List<Text> all = find.all();
