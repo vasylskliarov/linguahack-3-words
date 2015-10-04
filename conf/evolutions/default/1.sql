@@ -11,7 +11,7 @@ CREATE TABLE text (
     id int NOT NULL,
     file_name character varying,
     text character varying,
-    normalized_text int,
+    normalized_text character varying,
     showed_count int
 );
 
