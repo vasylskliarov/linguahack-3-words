@@ -16,11 +16,17 @@ import java.util.Random;
  */
 public class Dao {
 
+
+    private static List<Text> cachedTexts = null;
+
     private final static Long[] STUB_TEXT_IDS = {-695500318L, 994661804L, 687910408L};
     final Random random = new Random();
 
     public List<Text> getAllTexts() {
-        return Text.findAll();
+        if (cachedTexts == null) {
+            cachedTexts = Text.findAll();
+        }
+        return cachedTexts;
     }
 
     public Long getRandomTextId() {
@@ -86,7 +92,6 @@ public class Dao {
             // execute insert SQL stetement
             preparedStatement.executeUpdate();
 
-            System.out.println("Record is inserted into DBUSER table!");
         } catch (SQLException e) {
             e.printStackTrace();
         }
