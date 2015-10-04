@@ -11,6 +11,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.avaje.ebean.RawSql.Sql;
+
+import ch.qos.logback.classic.db.SQLBuilder;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
@@ -56,11 +59,14 @@ public class Text extends Model {
 
 	public static long getRandomTextId() {
     	Random random = new Random();
-    	int maxId = find.getMaxRows() - 1;
+    	
+    	int maxId = Text.find.where()
+    					.orderBy("id desc")
+    					.getFirstRow();
     	long textId = -1;
     	int count = 0;
     	do {
-    		int nextId = random.nextInt(maxId) + 1;
+    		int nextId = random.nextInt(maxId);
     		Text text = find.where().eq("id", nextId).findUnique();
     		if (text != null) {
     			textId = text.getId();
