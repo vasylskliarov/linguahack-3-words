@@ -28,7 +28,7 @@ public class TextFinder {
 
         for (Text text : texts) {
             int counter = 0;
-            if (shownFiles.get(text.getId()) == 0) {
+            //if (shownFiles.get(text.getId()) == 0) {
                 List<Word> normalizedWords = text.getNormalizedWords();
                 double cumulativeUnknownness = 0.0;
                 for (Word word : normalizedWords) {
@@ -45,7 +45,7 @@ public class TextFinder {
                     minDeviation = unknownWordsRateDeviation;
                     textID = text.getId();
                 }
-            }
+            //}
         }
         return textID;
     }
