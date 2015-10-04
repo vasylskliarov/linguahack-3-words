@@ -2,7 +2,11 @@ package backend
 
 import java.io._
 
+import models._
 import org.jsoup.Jsoup
+
+import scala.io.Source.fromFile
+import scala.collection.JavaConversions._
 
 object Parser {
   def cutContent(text: String): Option[String] = {
@@ -24,21 +28,27 @@ object Parser {
   }
 
   def main(args: Array[String]): Unit = {
-    val url = "http://www.quotev.com/?random&t=story"
-    val output = s"${System.getProperty("user.home")}/tmp/"
-    new File(output).mkdirs()
+    val path = s"${System.getProperty("user.home")}/tmp/"
 
-    (1 to 100000).par.foreach { i =>
-      val html = scala.io.Source.fromURL(url + i).mkString
-      cutContent(html) match {
-        case Some(text) =>
-          println(s"Text number $i downloaded!")
-          new PrintWriter(output + text.hashCode) {
-            write(text)
-            close()
-          }
-        case None =>
+    var i = 0
+    new File(path).listFiles().foreach { f =>
+      val text = {
+        val text = fromFile(f).take(1000)
+                              .mkString
+        val lastNl = text.lastIndexOf('\n')
+        text.dropRight(text.length - lastNl)
       }
+
+      val t = new Text
+      t.setFileName(f.getName)
+      t.setId(f.hashCode())
+      t.setShowedCount(0)
+      t.setNormalizedText(Utils.normalizedText(text))
+      t.setText(text)
+      t.save()
+
+      i += 1
+      println(s"Saved $i file.")
     }
   }
 }
