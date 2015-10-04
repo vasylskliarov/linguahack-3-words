@@ -33,7 +33,9 @@ public class RestControllers extends Controller {
             unknownWordList.add(it.next().asText());
         }
         //TODO get text id from ui
-        WordsStatisticsService.updateWordsStatistics(new TextFinder().getNormalizedWordsByTextId(123L), unknownWordList);
+        Long textId = 123L;
+        WordsStatisticsService.updateWordsStatistics(new TextFinder().getNormalizedWordsByTextId(textId), unknownWordList);
+        ShownTextsTracker.trackTextView(textId);
 
         return getFollowingText();
     }
