@@ -11,10 +11,12 @@
         <div class="col-lg-12 text-center">
             <h2 class="page-header">Тексты по <u style="text-decoration: none; border-bottom: 2px dashed">релевантности</u></h2>
         </div>
-        @for(text <- texts) {
+        @for((text, index) <- texts.zipWithIndex) {
             <div class="col-lg-4 col-sm-6 text-center">
-                <img class="img-circle img-center" src="http://placehold.it/200x200" alt="">
-                <p>@text.getText().substring(0, 100)</p>
+                <div class="percentage easyPieChart img-circle img-center" data-percent="@(90 - 4 * index)">
+                    &nbsp;
+                </div>
+                <p>@text.getText().substring(0, 200)...</p>
             </div>
         }
     </div>

@@ -36,6 +36,13 @@ $(document).ready(function() {
         });
     });
 
+    $('.percentage').easyPieChart({
+        animate: 500,
+        size: 220,
+        lineWidth: 5,
+        barColor: "#07b053"
+    });
+
     function initContent(data) {
         $(".text").html(data.content);
 
