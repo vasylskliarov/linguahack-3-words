@@ -15,7 +15,6 @@ import java.util.Map;
 
 public class Application extends Controller {
     public static Result index() {
-    	//backend.Parser.main(new String[] {});
         return ok(index.render());
     }
 

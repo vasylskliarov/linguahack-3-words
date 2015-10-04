@@ -1,5 +1,6 @@
 package backend;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -58,7 +59,12 @@ public class TextFinder {
     }
 
     public List<Word> getNormalizedWordsByTextId(Long id) {
-        return Text.findById(id).getNormalizedWords();
+        Text foundText = Text.findById(id);
+        if (foundText == null) {
+            return Collections.emptyList();
+        } else {
+            return foundText.getNormalizedWords();
+        }
     }
 
     public void setDao(Dao dao) {
