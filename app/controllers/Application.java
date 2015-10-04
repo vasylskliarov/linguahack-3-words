@@ -15,6 +15,11 @@ import java.util.Map;
 
 public class Application extends Controller {
     public static Result index() {
+        try {
+            backend.Tmp.main(new String[] {});
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return ok(index.render());
     }
 
