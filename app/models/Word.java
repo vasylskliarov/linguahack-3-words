@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import backend.Dao;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
@@ -51,11 +52,12 @@ public class Word extends Model {
     }
     
     public static Word findByValue(String word) {
-        Word wordObj = find.where().eq("normalizedValue", word).findUnique();
+        Word wordObj = find.where().eq("normalized_value", word).findUnique();
         if (wordObj == null) {
         	wordObj = new Word();
         	wordObj.setNormalizedValue(word);
-        	wordObj.save();
+
+			new Dao().insertWord(wordObj);
         }
 		return wordObj;
     }

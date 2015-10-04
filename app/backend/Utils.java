@@ -9,7 +9,7 @@ import java.util.*;
 
 public class Utils {
     private static final String[] punctuation = {
-            "", ",", ";", ".", ":", "_", "{", "}", "[", "]", "+", "*", "¡", "¿", "?", "=", ")", "(", "/", "&", "%", "$", "·",
+            "", ",", ";", ".", ":", "_", "{", "}", "[", "]", "+", "*", "¡", "¿", "?", "=", ")", "(", "/", "&", "%", "$", "·", "'", "`", "\""
     };
     private static final Set<String> punctuationSet = new HashSet<>(Arrays.asList(punctuation));
     private static final Porter porter = new Porter();

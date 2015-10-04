@@ -33,7 +33,7 @@ public class RestControllers extends Controller {
             unknownWordList.add(it.next().asText());
         }
         //TODO get text id from ui
-        Long textId = 123L;
+        Long textId = Long.parseLong(session().get("textId"));
         WordsStatisticsService.updateWordsStatistics(new TextFinder().getNormalizedWordsByTextId(textId), unknownWordList);
         ShownTextsTracker.trackTextView(textId);
 
@@ -45,7 +45,9 @@ public class RestControllers extends Controller {
         //Map<Long, Integer> shownTextsStatistics = ShownTextsTracker.getShownTextsStatisticsForUser();
         Map<Long, Integer> shownTextsStatistics = Collections.<Long, Integer>emptyMap();
         Long textId = new TextFinder().getTextId(features, shownTextsStatistics);
+        System.out.println(textId);
         String plainText = TextFinder.getPlainTextById(textId);
+        session().put("textId", Long.toString(textId));
 
         Map<String, Object> result = new HashMap<>();
         result.put("content", toHtml(plainText));
