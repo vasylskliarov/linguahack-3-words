@@ -1,9 +1,6 @@
 package backend;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import models.Text;
 import models.Word;
@@ -45,6 +42,54 @@ public class TextFinder {
                     minDeviation = unknownWordsRateDeviation;
                     textID = text.getId();
                 }
+            //}
+        }
+        return textID;
+    }
+
+    public List<Long> getTextIds(Map<String, Double> features) {
+        List<Long> result = new ArrayList<>();
+        Set<Long> excludedIds = new HashSet<>();
+        for (int i = 0; i < 5; i++) {
+            Long textId = getTextIdWithExclude(features, excludedIds);
+            excludedIds.add(textId);
+            result.add(textId);
+        }
+        return result;
+    }
+
+    public Long getTextIdWithExclude(Map<String, Double> features, Set<Long> excludedIds) {
+        if (features.isEmpty()) {
+            return dao.getRandomTextId();
+        }
+        Set<Text> texts = dao.getAllTexts();
+
+        double minDeviation = Double.MAX_VALUE;
+        Long textID = null;
+
+        for (Text text : texts) {
+            if (excludedIds.contains(text.getId())) {
+                continue;
+            }
+
+
+            int counter = 0;
+            //if (shownFiles.get(text.getId()) == 0) {
+            List<String> normalizedWords = text.getNormalizedWords();
+            double cumulativeUnknownness = 0.0;
+            for (String key : normalizedWords) {
+                if (features.containsKey(key)) {
+                    cumulativeUnknownness += features.get(key);
+                    ++counter;
+                }
+            }
+            double unknownWordsRateDeviation = Math.abs(cumulativeUnknownness / counter - UNKNOWN_WORDS_RATE);
+            if (Double.compare(unknownWordsRateDeviation, 0.0) == 0) {
+                return text.getId();
+            } else if (unknownWordsRateDeviation < minDeviation) {
+                minDeviation = unknownWordsRateDeviation;
+                textID = text.getId();
+            }
             //}
         }
         return textID;
